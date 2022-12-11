@@ -30,7 +30,7 @@ dp = Dispatcher(bot, storage=storage)
 @dp.message_handler(IsPrivate(), commands=['start', 'help'])
 async def send_welcome(msg: types.Message):
     try:
-        some_var = await bot.get_chat_member(-858689638, msg.from_user.id)
+        some_var = await bot.get_chat_member(config.config('channel_id'), msg.from_user.id)
         check = await func.first_join(user_id=msg.from_user.id, first_name=msg.from_user.first_name,
                                       username=msg.from_user.username, code=msg.text, bot=bot)
         if check[0] is True:
@@ -63,13 +63,13 @@ async def send_welcome(msg: types.Message):
             else:
                 pass
     except Exception as e:
-        await bot.send_message(config.config('admin_group'), f'Пизда, старт наебнулся {e}')
+        await bot.send_message(config.config('admin_group'), f'Что-то пошло не так, недостаток данных {e}')
 
 
 @dp.message_handler(IsPrivate(), commands=['admin', 'a', 'админ'])
 async def admin(message: types.Message):
     if str(message.from_user.id) in config.config('admin_id'):
-        await message.answer(f'{message.from_user.get_mention(as_html=True)} че ты в админке забыл?',
+        await message.answer(f'{message.from_user.get_mention(as_html=True)} Добро пожаловать в панель администратора!',
                              reply_markup=menu.admin_menu())
 
 
@@ -79,7 +79,7 @@ async def send_message(message: types.Message):
 
     try:
         if User(chat_id).ban == 'no':
-            some_var = await bot.get_chat_member(-858689638, message.from_user.id)
+            some_var = await bot.get_chat_member(config.config('channel_id'), message.from_user.id)
             user_status = some_var.status
             if user_status == 'member' or user_status == 'administrator' or user_status == 'creator':
 
