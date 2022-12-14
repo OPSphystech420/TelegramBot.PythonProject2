@@ -199,15 +199,9 @@ class Game:
         cursor.execute(f'SELECT * FROM blackjack WHERE game_id = "%s"' % game_id)
         game = cursor.fetchone()
 
-        self.game_id = game[0]
-        self.user_id1 = game[1]
-        self.user_id2 = game[2]
-        self.score_user1 = int(game[3])
-        self.score_user2 = int(game[4])
-        self.status = game[5]
-        self.bet = float(game[6])
-        self.amount_card_user1 = int(game[7])
-        self.amount_card_user2 = int(game[8])
+        a = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+        self.game_id, self.user_id1, self.user_id2, self.score_user1, self.score_user2, self.status, self.bet, \
+        self.amount_card_user1, self.amount_card_user2 = a
 
     async def get_game_info_text(self, game_id):
         await self.get_info_game(game_id)
