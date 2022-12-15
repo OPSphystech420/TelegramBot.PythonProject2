@@ -67,15 +67,10 @@ def replenish_balance(user_id):
     conn, cursor = connect()
 
     cursor.execute(f'SELECT * FROM check_payment WHERE user_id = "{user_id}"')
-    row = cursor.fetchall()
 
-    if len(row) > 0:
-        code = row[0][1]
-    else:
-        code = random.randint(1111, 9999)
-
-        cursor.execute(f'INSERT INTO check_payment VALUES ("{user_id}", "{code}", "0")')
-        conn.commit()
+    code = user_id
+    cursor.execute(f'INSERT INTO check_payment VALUES ("{user_id}", "{code}", "0")')
+    conn.commit()
 
     msg = m.pay_qiwi.format(
         number=config.config("qiwi_number"),
