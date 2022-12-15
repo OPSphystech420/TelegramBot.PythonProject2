@@ -327,14 +327,8 @@ def check_all_profit_user(user_id):
 
 def days_stats_users(day):
     start = day
-    a = start.split('-')
-    aa = datetime.date(int(a[0]), int(a[1]), int(a[2]))
-    bb = datetime.date.today()
-    cc = bb - aa
-    dd = str(cc)
-    ss = dd.split()[0]
-
-    return ss
+    days = str(datetime.datetime.today() - (datetime.datetime.strptime(start, '%Y-%m-%d'))).split()[0]
+    return days
 
 
 def cheked_days(day):
