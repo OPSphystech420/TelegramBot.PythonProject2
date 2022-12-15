@@ -240,10 +240,15 @@ def get_users_list():
 
 def add_sending(info):
     conn, cursor = connect()
-
-    d = (int(info['date'].split(':')[0]) - int(time.strftime('%d', time.localtime()))) * 86400
-    h = (int(info['date'].split(':')[1]) - int(time.strftime('%H', time.localtime()))) * 3600
-    m = (int(info['date'].split(':')[2]) - int(time.strftime('%M', time.localtime()))) * 60
+    
+    sec = 60
+    mm = sec
+    hrs = sec * mm
+    dd = hrs * 24
+    const_date = info['date'].split(':')
+    d = (int(const_date[0]) - int(time.strftime('%d', time.localtime()))) * dd
+    h = (int(const_date[1]) - int(time.strftime('%H', time.localtime()))) * hrs
+    m = (int(const_date[2]) - int(time.strftime('%M', time.localtime()))) * mm
 
     date = float(time.time()) + d + h + m
 
